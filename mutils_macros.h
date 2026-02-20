@@ -56,7 +56,7 @@
 
 #ifndef LIKELY
 	#ifdef __GNUC__
-		#if !defined(__clang__)
+		#ifndef __clang__
 			#pragma GCC diagnostic push
 			#pragma GCC diagnostic ignored "-Wunused-macros"
 		#endif
@@ -64,7 +64,7 @@
 		#define LIKELY(x)   __builtin_expect(!!(x), 1)
 		#define UNLIKELY(x) __builtin_expect(!!(x), 0)
 	
-		#if !defined(__clang__)
+		#ifndef __clang__
 			#pragma GCC diagnostic pop  // -Wunused-macros
 		#endif
 	#else
