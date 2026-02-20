@@ -1,10 +1,10 @@
 /*
  * mutils.c -- implementation part of a compact and handy collection of C utilities
- * version 0.9.5, June 22, 2025
+ * version 0.9.6, Feb. 20, 2026
  *
  * License: zlib License
  *
- * Copyright (c) 2025 Kazushi Yamasaki
+ * Copyright (c) 2026 Kazushi Yamasaki
  *
  * This software is provided ‘as-is’, without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -32,6 +32,8 @@
 #include <stdlib.h>
 #include <errno.h>
 
+#include "cver_compat.h"
+
 
 #if !defined (__STDC_VERSION__) || (__STDC_VERSION__ < 199901L)
 	#error "This program requires C99 or higher."
@@ -48,14 +50,14 @@
 
 /* errno 記録時に関数名を記録する */
 #ifdef THREAD_LOCAL
-	THREAD_LOCAL const char* mutils_errfunc = NULL;
+	THREAD_LOCAL const char* mutils_errfunc = PTR_NULL;
 #else
-	const char* mutils_errfunc = NULL;  /* 非スレッドセーフ */
+	const char* mutils_errfunc = PTR_NULL;  /* 非スレッドセーフ */
 #endif
 
 
 size_t mutils_strnlen (const char* string, size_t max_bytes) {
-	if (string == NULL || max_bytes == 0) {
+	if (string == PTR_NULL || max_bytes == 0) {
 		mutils_errfunc = "mutils_strnlen";
 		errno = EINVAL;
 		return 0;
@@ -69,18 +71,18 @@ size_t mutils_strnlen (const char* string, size_t max_bytes) {
 
 
 char* mutils_strndup (const char* string, size_t max_bytes) {
-	if (string == NULL || max_bytes == 0) {
+	if (string == PTR_NULL || max_bytes == 0) {
 		errno = EINVAL;
 		mutils_errfunc = "mutils_strndup";
-		return NULL;
+		return PTR_NULL;
 	}
 
 	size_t len = mutils_strnlen(string, max_bytes);
 	char* dup = malloc(len + 1);
-	if (UNLIKELY(dup == NULL)) {
+	if (UNLIKELY(dup == PTR_NULL)) {
 		errno = ENOMEM;
 		mutils_errfunc = "mutils_strndup";
-		return NULL;
+		return PTR_NULL;
 	}
 
 	memcpy(dup, string, len);
@@ -90,10 +92,10 @@ char* mutils_strndup (const char* string, size_t max_bytes) {
 
 
 char* mutils_getsn (char* buf, size_t cnt) {
-	if (buf == NULL || cnt == 0) {
+	if (buf == PTR_NULL || cnt == 0) {
 		mutils_errfunc = "mutils_getsn";
 		errno = EINVAL;
-		return NULL;
+		return PTR_NULL;
 	}
 
 	memset(buf, 0, cnt);
@@ -113,5 +115,5 @@ char* mutils_getsn (char* buf, size_t cnt) {
 
 		return buf;
 	}
-	return NULL;
+	return PTR_NULL;
 }

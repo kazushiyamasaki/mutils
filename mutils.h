@@ -1,10 +1,10 @@
 /*
  * mutils.h -- interface for a compact and handy collection of C utilities
- * version 0.9.5, June 22, 2025
+ * version 0.9.6, Feb. 20, 2026
  *
  * License: zlib License
  *
- * Copyright (c) 2025 Kazushi Yamasaki
+ * Copyright (c) 2026 Kazushi Yamasaki
  *
  * This software is provided ‘as-is’, without any express or implied
  * warranty. In no event will the authors be held liable for any damages
