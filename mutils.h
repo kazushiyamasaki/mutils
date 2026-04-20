@@ -1,6 +1,6 @@
 /*
  * mutils.h -- interface for a compact and handy collection of C utilities
- * version 0.9.0, Apr. 18, 2026
+ * version 0.9.1, Apr. 21, 2026
  *
  * License: zlib License
  *
@@ -89,7 +89,7 @@ extern char* mutils_strndup (const char* string, size_t max_bytes);
  * @note: buf must be writable; non-writable formats like string literal
  *        cannot be used
  */
-extern char* mutils_getsn (char* buf, int cnt);
+extern char* mutils_getsn (char* buf, size_t cnt);
 
 /*
  * getsn_truncated_len is a global variable that counts the number of

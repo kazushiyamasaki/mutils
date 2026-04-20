@@ -1,6 +1,6 @@
 /*
  * mutils.c -- implementation part of a compact and handy collection of C utilities
- * version 0.9.0, Apr. 18, 2026
+ * version 0.9.1, Apr. 21, 2026
  *
  * License: zlib License
  *
@@ -30,6 +30,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 #include <errno.h>
 
 #include "cver_compat/cver_compat.h"
@@ -101,17 +102,17 @@ char* mutils_strndup (const char* string, size_t max_bytes) {
 }
 
 
-char* mutils_getsn (char* buf, int cnt) {
+char* mutils_getsn (char* buf, size_t cnt) {
 	getsn_truncated_len = 0;
 
-	if (buf == PTR_NULL || cnt <= 0) {
+	if (buf == PTR_NULL || cnt == 0 || cnt > INT_MAX) {
 		mutils_errfunc = "mutils_getsn";
 		errno = EINVAL;
 		return PTR_NULL;
 	}
 
-	if (fgets(buf, cnt, stdin)) {
-		size_t len = strlen(buf);
+	if (fgets(buf, (int)cnt, stdin)) {
+		size_t len = mutils_strnlen(buf, cnt);
 
 		/* 改行が末尾にあれば取り除く */
 		if (LIKELY(len > 0)) {
